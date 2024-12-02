@@ -39,7 +39,7 @@ def exponential_search(data, target):
         return 0
     index = 1
     while index < len(data) and data[index] <= target:
-        index *= 2
+        index =  index *2
     return binary_search_range(data, target, index // 2, min(index, len(data)))
 
 def binary_search_range(data, target, left, right):
@@ -53,51 +53,57 @@ def binary_search_range(data, target, left, right):
             right = mid
     return -1
 
+#333_334
+for n in (10,50,100, 1_000, 100_000, 1_000_000): 
+    gg = n
 # generate datasets
-np.random.seed(42) # force the same datasets for consistent runs
-uniform_data = np.linspace(10, 100, 1_000_000)
-skewed_data = np.random.exponential(scale=20, size=1_000_000)
-non_uniform_data = np.concatenate([
-    np.random.uniform(10, 30, 333_334),
-    np.random.uniform(60, 80, 333_333),
-    np.random.uniform(90, 100, 333_333)
-])
-datasets = {"Uniform": uniform_data, "Skewed": skewed_data, "NonUniform": non_uniform_data}
+    np.random.seed(42) # force the same datasets for consistent runs
+    uniform_data = np.linspace(10, 100, n)
+    skewed_data = np.random.exponential(scale=20, size=n)
+    val = 100_000 
+    non_uniform_data = np.concatenate([
+        np.random.uniform(10, 30, val),
+        np.random.uniform(60, 80, val),
+        np.random.uniform(90, 100, val)
+    ])
 
-# target value
-target = 60
+    datasets = {"Uniform": uniform_data, "Skewed": skewed_data, "NonUniform": non_uniform_data}
 
-# inject target in the datasets
-for data in datasets.values():
-    data[500_000] = target
-    data.sort()
+    # target value
+    target = 60
 
-# perform search
-search_methods = {
-    "Binary Search": binary_search,
-    "Interpolation Search": interpolation_search,
-    "Exponential Search": exponential_search,
-}
-results = {}
+    t = int(gg)/2 
+    # inject target in the datasets
+    for data in datasets.values():
+        data[10] = target
+        data.sort()
 
-# compute execution times
+    # perform search
+    search_methods = {
+        "Binary Search": binary_search,
+        "Interpolation Search": interpolation_search,
+        "Exponential Search": exponential_search,
+    }
+    results = {}
 
-# if computer is too fast use this
-print(f"Execution Time Over 10k runs")
-iterations = 10_000  
-for method_name, method in search_methods.items():
-    print(f"\n{method_name} Execution Time:")
-    for dataset_name, dataset in datasets.items():
-        total_time = 0
-        for _ in range(iterations):
-            start_time = time.time_ns()  
-            result_index = method(dataset, target)
-            end_time = time.time_ns() 
-            total_time += (end_time - start_time)
-        avg_time_ns = total_time // iterations
-        print(f"{dataset_name}: {avg_time_ns} ns")
+    # compute execution times
 
-print("------------------------------------------------------")
+    # if computer is too fast use this
+    print(f"Execution Time Over 10k runs")
+    iterations = 10_00  
+    for method_name, method in search_methods.items():
+        print(f"\n{method_name} Execution Time:")
+        for dataset_name, dataset in datasets.items():
+            total_time = 0
+            for _ in range(iterations):
+                start_time = time.time_ns()  
+                result_index = method(dataset, target)
+                end_time = time.time_ns() 
+                total_time += (end_time - start_time)
+            avg_time_ns = total_time // iterations
+            print(f"{dataset_name}: {avg_time_ns} ns")
+
+"""print("------------------------------------------------------")
 print(f"\nExecution Time Over 1 run")
 # for normal execution without avg of 10k runs
 for typem, method in search_methods.items():
@@ -108,3 +114,4 @@ for typem, method in search_methods.items():
         end_time = time.time_ns() 
         execution_time_ns = end_time - start_time 
         print(f"{dataset_name}: {execution_time_ns} ns")
+"""

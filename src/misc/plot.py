@@ -5,9 +5,9 @@ import numpy as np
 algorithms = ['Binary Search', 'Interpolation Search', 'Exponential Search']
 distributions = ['Uniform', 'Skewed', 'NonUniform']
 data = {
-    'Binary Search': [32620, 22176, 19866],
-    'Interpolation Search': [10053, 286953, 58811],
-    'Exponential Search': [34574, 25716, 30167],
+    'Binary Search': [7524, 9060, 9774],
+    'Interpolation Search': [1832, 157157, 40404],
+    'Exponential Search': [15922, 13748, 13457],
 }
 
 x = np.arange(len(distributions))
